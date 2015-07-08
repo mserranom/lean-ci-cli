@@ -1,0 +1,12 @@
+{
+  "name": "lean-ci-cli",
+  "version": "0.1.0",
+  "bin": {
+    "leanci": "src/main/js/index.js"
+  },
+  "devDependencies": {
+    "commander": "^2.8.1",
+    "prompt": "^0.2.14",
+    "request": "^2.58.0"
+  }
+}
