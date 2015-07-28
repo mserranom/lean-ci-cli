@@ -4,58 +4,27 @@ var program = require('commander');
 
 program
     .version('0.0.1')
-    .option('-p, --publish [artifact]', 'publishes artifact [artifact] to remote repository', /^(coke|pepsi|izze)$/i)
-    .option('-u, --user [username:password]', 'sets user credentials');
+    .option('login', 'initiates the login process')
+    .option('logout', 'logs out current user');
 
-// must be before .parse() since
-// node's emit() is immediate
+program.on('login', function() {
+    var login = require('./commands/login');
+    login();
+});
 
-program.on('-h', function(){
-    console.log('  Examples:');
-    console.log('');
-    console.log('    $ custom-help --help');
-    console.log('    $ custom-help -h');
-    console.log('');
+program.on('logout', function() {
+    var logout = require('./commands/logout');
+    logout();
+});
+
+program.on('ping', function() {
+    var ping = require('./commands/ping');
+    ping();
+});
+
+program.on('finished', function() {
+    var finished = require('./commands/finished');
+    finished();
 });
 
 program.parse(process.argv);
-
-
-var loginPromptSchema = {
-    properties: {
-        name: {
-            pattern: /^[a-zA-Z\s\-]+$/,
-            message: 'Name must be only letters, spaces, or dashes',
-            required: true
-        },
-        password: {
-            hidden: true
-        }
-    }
-};
-
-function login() {
-    console.log('Introduce your lean-ci credentials');
-    var prompt = require('prompt');
-
-    prompt.message = ''; "Question!".rainbow;
-    prompt.delimiter = ': '; "><".green;
-
-    prompt.start();
-    prompt.get(loginPromptSchema, function (err, result) {
-        //
-        // Log the results.
-        //
-        console.log('  username: ' + result.username);
-        console.log('  password: ' + result.password);
-    });
-}
-
-function publish() {
-
-    var ar
-
-
-}
-
-login();
