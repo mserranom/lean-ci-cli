@@ -9,7 +9,6 @@ function request(endpoint, onResult, data) {
         storedConfig.userId = headers['x-lean-ci-user-id'];
         storedConfig.userToken = headers['x-lean-ci-user-token'];
         storedConfig.githubToken = headers['x-lean-ci-github-token'];
-        console.log('NEWCONF: ' + JSON.stringify(storedConfig));
         configReader.writeConfig(storedConfig);
     }
 

@@ -27,4 +27,9 @@ program.on('finished', function() {
     finished();
 });
 
+program.on('dashboard', function() {
+    var dashboard = require('./commands/dashboard');
+    dashboard();
+});
+
 program.parse(process.argv);
