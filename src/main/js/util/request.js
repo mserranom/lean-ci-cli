@@ -1,6 +1,21 @@
 module.exports.request = request;
+module.exports.get = get;
+module.exports.post = post;
+module.exports.del = del;
 
-function request(endpoint, onResult, data) {
+function get(endpoint, onResult) {
+    request(endpoint, onResult, 'get');
+}
+
+function post(endpoint, onResult, data) {
+    request(endpoint, onResult, 'post', data);
+}
+
+function del(endpoint, onResult) {
+    request(endpoint, onResult, 'del');
+}
+
+function request(endpoint, onResult, method, data) {
 
     var configReader = require('./config');
 
@@ -34,7 +49,9 @@ function request(endpoint, onResult, data) {
 
     var req = require('request');
 
-    var method = data ? 'post' : 'get';
+    if(!method) {
+        method = data ? 'post' : 'get';
+    }
 
     req[method](options, function (error, response, body) {
         if(error) {
