@@ -3,12 +3,8 @@
 var program = require('commander');
 
 program
-    .version('0.0.1')
-    .option('login', 'initiates the login process')
-    .option('logout', 'logs out current user')
-    .option('repo:list', 'list repositories in the CD pipeline')
-    .option('repo:add [name]', 'adds a repository to the CD pipeline')
-    .option('repo:delete [name]', 'removes a repository in the CD pipeline');
+    .version('0.0.1');
+
 
 function checkLogin() {
     var config = require('./util/config');
@@ -18,21 +14,70 @@ function checkLogin() {
     }
 }
 
-program.on('login', function() {
-    var login = require('./commands/login');
-    login();
-});
+program
+    .command('login')
+    .description('initiates the login process')
+    .action(function() {
+        var login = require('./commands/login');
+        login();
+    });
 
-program.on('logout', function() {
-    var logout = require('./commands/logout');
-    logout();
-});
+program
+    .command('logout')
+    .description('logs out current user')
+    .action(function() {
+        var logout = require('./commands/logout');
+        logout();
+    });
 
-program.on('ping', function() {
-    checkLogin();
-    var ping = require('./commands/ping');
-    ping();
-});
+program
+    .command('repo:list')
+    .description('list repositories in the CD pipeline')
+    .action(function() {
+        checkLogin();
+        var repo = require('./commands/repo');
+        repo.list();
+    });
+
+program
+    .command('repo:add <name>')
+    .description('adds a repository to the CD pipeline')
+    .action(function(name) {
+        checkLogin();
+        var repo = require('./commands/repo');
+        repo.add(name);
+    });
+
+program
+    .command('repo:delete <name>')
+    .description('removes a repository in the CD pipeline')
+    .action(function(name) {
+        checkLogin();
+        var repo = require('./commands/repo');
+        repo.del(name);
+    });
+
+program
+    .command('publish:publish <descriptor>')
+    .description('publishes an artifact in the form groupId:artifactId:type:version')
+    .option("-f, --file [path]", "artifact to upload")
+    .action(function(descriptor, options){
+        checkLogin();
+        var repo = require('./commands/publish');
+        repo.publish(descriptor, options.file);
+    });
+
+program
+    .command('publish:fetch <descriptor>')
+    .description('fetches an stored artifact in the form groupId:artifactId:type:version')
+    .option("-o, --output [file]", "the name of the output file")
+    .action(function(descriptor, options){
+        checkLogin();
+        var repo = require('./commands/publish');
+        repo.fetch(descriptor, options.output);
+    });
+
+// commands in Progress
 
 program.on('finished', function() {
     checkLogin();
@@ -46,24 +91,14 @@ program.on('dashboard', function() {
     dashboard();
 });
 
-program.on('repo:list', function() {
+program.on('ping', function() {
     checkLogin();
-    var repo = require('./commands/repo');
-    repo.list();
+    var ping = require('./commands/ping');
+    ping();
 });
 
-program.on('repo:add', function() {
-    checkLogin();
-    var repoName = program['repo:add'];
-    var repo = require('./commands/repo');
-    repo.add(repoName);
-});
-
-program.on('repo:delete', function() {
-    checkLogin();
-    var repoName = program['repo:delete'];
-    var repo = require('./commands/repo');
-    repo.del(repoName);
-});
+if (!process.argv.slice(2).length) {
+    program.outputHelp();
+}
 
 program.parse(process.argv);

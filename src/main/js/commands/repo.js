@@ -14,7 +14,7 @@ function list() {
 
 function add(name) {
     var req = require('../util/request');
-    req.post('/repositories/' + encodeURIComponent(name), function(response){} );
+    req.post('/repositories/' + encodeURIComponent(name), function(response){console.log('response')} );
 }
 
 function del(name) {
