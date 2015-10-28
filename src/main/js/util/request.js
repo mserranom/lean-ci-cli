@@ -60,7 +60,9 @@ function request(endpoint, onResult, method, data) {
             onRequestError('server status code: ' + response.statusCode);
         } else {
             saveCredentials(response.headers);
-            onResult(body);
+            if(onResult) {
+                onResult(body);
+            }
         }
     });
 

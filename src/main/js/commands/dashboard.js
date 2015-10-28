@@ -55,11 +55,6 @@ function dashboard() {
     //allow control the table with the keyboard
     //queueTable.focus();
 
-    setInterval(updateQueueList, 3000);
-    setInterval(updateActiveList, 3000);
-    setInterval(updateFinishedList, 3000);
-
-
     screen.key(['escape', 'q', 'C-c'], function (ch, key) {
         return process.exit(0);
     });
@@ -69,7 +64,7 @@ function dashboard() {
     var req = require('../util/request');
 
     function updateQueueList() {
-        req.request('/build/queue', function (response) {
+        req.request('/build/queue', function (body) {
             updateQueueData(JSON.parse(body));
         });
     }
@@ -87,8 +82,8 @@ function dashboard() {
 
 
     function updateActiveList() {
-        req.request('/build/active', function (response) {
-            updateActiveData(JSON.parse(response));
+        req.request('/build/active', function (body) {
+            updateActiveData(JSON.parse(body));
         });
     }
 
@@ -104,8 +99,8 @@ function dashboard() {
     }
 
     function updateFinishedList() {
-        req.request('/build/finished', function (response) {
-            updateFinishedData(JSON.parse(response));
+        req.request('/build/finished', function (body) {
+            updateFinishedData(JSON.parse(body));
         })
     }
 
@@ -120,7 +115,17 @@ function dashboard() {
         screen.render();
     }
 
+
+    updateQueueList();
+    updateActiveList();
+    setInterval(updateQueueList, 3000);
+    setInterval(updateActiveList, 3000);
+    //setInterval(updateFinishedList, 3000);
+
 }
+
+
+
 
 
 

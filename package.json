@@ -7,8 +7,12 @@
   "devDependencies": {
     "blessed": "^0.1.15",
     "blessed-contrib": "^2.3.2",
+    "body-parser": "^1.13.3",
     "commander": "^2.8.1",
+    "express": "^4.13.3",
+    "multer": "^1.0.1",
     "prompt": "^0.2.14",
-    "request": "^2.58.0"
+    "request": "^2.58.0",
+    "shelljs": "^0.5.1"
   }
 }

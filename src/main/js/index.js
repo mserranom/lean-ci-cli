@@ -77,6 +77,35 @@ program
         repo.fetch(descriptor, options.output);
     });
 
+// TO BE FIXED
+//
+//program
+//    .command('build:build')
+//    .description('runs a module build')
+//    .action(function(){
+//        checkLogin();
+//        var build = require('./commands/build');
+//        build.build();
+//    });
+
+program
+    .command('build:local')
+    .description('runs a module build using local machine as build host')
+    .action(function(){
+        checkLogin();
+        var build = require('./commands/build');
+        build.local();
+    });
+
+program
+    .command('build:start <repo>')
+    .description('schedules a CD build for the provided repo')
+    .action(function(repo){
+        checkLogin();
+        var build = require('./commands/build');
+        build.start(repo);
+    });
+
 // commands in Progress
 
 program.on('finished', function() {
