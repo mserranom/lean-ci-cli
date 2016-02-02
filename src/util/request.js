@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports.request = request;
 module.exports.get = get;
 module.exports.post = post;
@@ -11,8 +13,8 @@ function post(endpoint, onResult, data) {
     request(endpoint, onResult, 'post', data);
 }
 
-function del(endpoint, onResult) {
-    request(endpoint, onResult, 'del');
+function del(endpoint, onResult, data) {
+    request(endpoint, onResult, 'del', data);
 }
 
 function request(endpoint, onResult, method, data) {
@@ -43,6 +45,11 @@ function request(endpoint, onResult, method, data) {
         }
     };
 
+    if(config.githubToken === 'local') {
+        options.url = 'http://localhost:8091' + endpoint;
+        options.headers['x-lean-ci-user-token'] = 'mock_token';
+    }
+
     if(data) {
         options.formData = data;
     }
@@ -55,9 +62,12 @@ function request(endpoint, onResult, method, data) {
 
     req[method](options, function (error, response, body) {
         if(error) {
-            onRequestError(error);
+            console.error(error);
         } else if(response.statusCode != 200) {
-            onRequestError('server status code: ' + response.statusCode);
+            console.error('server status code: ' + response.statusCode);
+            if(body) {
+                console.error(body);
+            }
         } else {
             saveCredentials(response.headers);
             if(onResult) {
@@ -67,7 +77,4 @@ function request(endpoint, onResult, method, data) {
     });
 
 
-    function onRequestError(error) {
-        console.log(error);
-    }
 }

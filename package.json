@@ -2,17 +2,24 @@
   "name": "lean-ci-cli",
   "version": "0.1.0",
   "bin": {
-    "leanci": "src/main/js/index.js"
+    "leanci": "src/index.js"
+  },
+  "scripts": {
+    "test" : "./node_modules/mocha/bin/mocha --timeout 15000 --bail --sort test/**/*.js"
   },
   "devDependencies": {
     "blessed": "^0.1.15",
     "blessed-contrib": "^2.3.2",
     "body-parser": "^1.13.3",
+    "chai": "3.5.0",
+    "chai-as-promised": "5.2.0",
     "commander": "^2.8.1",
     "express": "^4.13.3",
+    "grunt-mocha-test": "0.12.7",
+    "mocha": "2.4.5",
     "multer": "^1.0.1",
     "prompt": "^0.2.14",
     "request": "^2.58.0",
-    "shelljs": "^0.5.1"
+    "shelljs": "0.5.3"
   }
 }
