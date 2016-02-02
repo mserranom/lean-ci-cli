@@ -5,7 +5,7 @@
     "leanci": "src/index.js"
   },
   "scripts": {
-    "test" : "./node_modules/mocha/bin/mocha --timeout 15000 --bail --sort test/**/*.js"
+    "test" : "./node_modules/mocha/bin/mocha --timeout 20000 --bail --sort test/**/*.js"
   },
   "devDependencies": {
     "blessed": "^0.1.15",
