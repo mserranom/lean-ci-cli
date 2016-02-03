@@ -65,6 +65,16 @@ module.exports = function(args) {
             repo.del(name);
         });
 
+    program
+        .command('build:request <repo> [commit]')
+        .description('requests a new build for a given repository')
+        .action(function(repo, commit) {
+            checkLogin();
+            var build = require('./commands/build');
+            build.request(repo, commit);
+        });
+
+
     if (!args.slice(2).length) {
         program.outputHelp();
     }

@@ -12,10 +12,10 @@ function list() {
 
 function add(name) {
     var req = require('../util/request');
-    req.post('/repositories', console.log, {name : name} );
+    req.post('/repositories', () => console.log('repo ' + name + ' added'), {name : name} );
 }
 
 function del(name) {
     var req = require('../util/request');
-    req.del('/repositories', console.log, {name : name});
+    req.del('/repositories', () => console.log('repo ' + name + ' deleted'), {name : name});
 }
