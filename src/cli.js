@@ -21,11 +21,14 @@ module.exports = function(args) {
         ping();
     });
 
-    program.on('dashboard', function() {
-        checkLogin();
-        let dashboard = require('./commands/dashboard');
-        dashboard();
-    });
+    program
+        .command('dashboard')
+        .description('opens the terminal dashboard')
+        .action(function(options) {
+            checkLogin();
+            let dashboard = require('./commands/dashboard');
+            dashboard();
+        });
 
     program
         .command('login')
