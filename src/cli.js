@@ -21,6 +21,12 @@ module.exports = function(args) {
         ping();
     });
 
+    program.on('dashboard', function() {
+        checkLogin();
+        let dashboard = require('./commands/dashboard');
+        dashboard();
+    });
+
     program
         .command('login')
         .description('initiates the login process')

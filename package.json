@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "blessed": "^0.1.15",
-    "blessed-contrib": "^2.3.2",
+    "blessed-contrib": "^2.5.3",
     "body-parser": "^1.13.3",
     "chai": "3.5.0",
     "chai-as-promised": "5.2.0",
